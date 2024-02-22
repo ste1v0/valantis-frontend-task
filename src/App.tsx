@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import md5  from 'md5'
+import md5 from 'md5'
 import './App.css'
 import Item from './components/Item'
 import ItemProps from './types/ItemProps'
@@ -11,27 +11,32 @@ function App() {
 	const [ loadingIds, setLoadingIds ] = useState<boolean>(false)
 	const [ loadingItems, setLoadingItems ] = useState<boolean>(false)
 
-	const currentDate = new Date()
-	const currentYear = currentDate.getFullYear()
-	const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-	const currentDay = currentDate.getDate()
-
 	const password = process.env.API_PASSWORD
 
-	const key = md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
+	function generateDate() {
+		const timeElapsed = Date.now()
+		const today = new Date(timeElapsed)
+		
+		const currentYear = today.getUTCFullYear()
+		const currentMonth = (today.getUTCMonth() + 1).toString().padStart(2, '0')
+		const currentDay = today.getUTCDate()
+
+		return md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
+	}
 
 	useEffect(() => {
+		const key = generateDate()
 		setLoadingIds(true)
-		fetch('http://api.valantis.store:40000?', {
+		fetch('http://api.valantis.store:40000', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Auth': key
+				'X-Auth': key	
 			},
 			body: JSON.stringify( {
 				action: 'get_ids',
 				params: {
-					limit: 50
+					limit: 60
 				}
 			})
 		})
@@ -43,14 +48,16 @@ function App() {
 				}
 			})
 			.then(data => {
-				const idsSet = new Set<string>(data.result)
-				setIds(Array.from(idsSet))
+				const uniqueIds = new Set<string>(data.result)
+				const uniqueArray = Array.from(uniqueIds)
+				setIds(uniqueArray)
 				setLoadingIds(false)
 			})
 	}, [])
 
 	useEffect(() => {
 		if (ids.length > 0) {
+			const key = generateDate()
 			setLoadingItems(true)
 			fetch('http://api.valantis.store:40000?', {
 				method: 'POST',
@@ -73,7 +80,13 @@ function App() {
 					}
 				})
 				.then(data => { 
-					setItems(data.result)
+					for (const id of ids.slice(0, 50)) {
+						const result = data.result.find(e => e.id === id)
+						if (result) {
+							setItems(prevValue => [...prevValue, result])
+						}
+					}
+					console.log(items.length)
 					setLoadingItems(false)
 				})
 		}
