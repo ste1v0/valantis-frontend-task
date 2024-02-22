@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import ItemProps from '../types/ItemProps'
 
-export default function Item( { brand, price, product, id }) {
+export default function Item( { brand, price, product, id } : ItemProps ) {
 
-    const [ itemIdClicked, setItemIdClicked ] = useState(false)
+    const [ itemIdClicked, setItemIdClicked ] = useState<boolean>(false)
 
     function handleIdClick() {
 		setItemIdClicked(prevValue => !prevValue)

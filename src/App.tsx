@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import md5  from 'md5'
 import './App.css'
 import Item from './components/Item'
+import IdProps from './types/IdProps'
+import ItemProps from './types/ItemProps'
 
 function App() {
 
-	const [ ids, setIds ] = useState([])
-	const [ items, setItems ] = useState([])
-	const [ loadingIds, setLoadingIds ] = useState(null)
-	const [ loadingItems, setLoadingItems ] = useState(null)
-	const [ itemIdClicked, setItemIdClicked ] = useState(false)
+	const [ ids, setIds ] = useState<IdProps[]>([])
+	const [ items, setItems ] = useState<ItemProps[]>([])
+	const [ loadingIds, setLoadingIds ] = useState<boolean>(false)
+	const [ loadingItems, setLoadingItems ] = useState<boolean>(false)
 
 	const currentDate = new Date()
 	const currentYear = currentDate.getFullYear()
@@ -43,8 +44,8 @@ function App() {
 				}
 			})
 			.then(data => {
-				const uniqueValues = new Set(data.result)
-				setIds([...uniqueValues])
+				const idsSet = new Set<IdProps>(data.result)
+				setIds(Array.from(idsSet))
 				setLoadingIds(false)
 			})
 	}, [])
