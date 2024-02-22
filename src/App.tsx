@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 import md5  from 'md5'
 import './App.css'
 import Item from './components/Item'
-import IdProps from './types/IdProps'
 import ItemProps from './types/ItemProps'
 
 function App() {
 
-	const [ ids, setIds ] = useState<IdProps[]>([])
+	const [ ids, setIds ] = useState<string[]>([])
 	const [ items, setItems ] = useState<ItemProps[]>([])
 	const [ loadingIds, setLoadingIds ] = useState<boolean>(false)
 	const [ loadingItems, setLoadingItems ] = useState<boolean>(false)
@@ -44,7 +43,7 @@ function App() {
 				}
 			})
 			.then(data => {
-				const idsSet = new Set<IdProps>(data.result)
+				const idsSet = new Set<string>(data.result)
 				setIds(Array.from(idsSet))
 				setLoadingIds(false)
 			})
