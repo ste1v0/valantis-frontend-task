@@ -1,7 +1,95 @@
+body {
+	font-style: 'Roboto', 'Arial', 'sans-serif';
+	background: #f5f5f5;
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	transition: all 0.15s ease;
+	transition: all .3s ease;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
+.app__loader-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.app__loader {
+	color: #FFF;
+	padding: 2vh 5vw;
+	background: black;
+	border-radius: 7px;
+	font-weight: 200;
+	font-size: 1.3rem;
+	line-height: 1.5;
+}
+
+.app__items-container {
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	padding: 3vh;
+	flex-wrap: wrap;
+	gap: 2vh 2vw;
+	justify-content: center;
+}
+
+.app__item {
+	padding: 3vh;
+	background-color: #e2dfdf;
+	border-radius: 12px;
+	color: #000;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex-grow: 1;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.app__item:hover {
+	transform: scale(1.05);
+	background-color: #FFF;
+	box-shadow: 0 0 9px #FFF;
+}
+
+.app__item-img {
+	background-image: url('https://placehold.co/200x200/FFF3D3/000');
+	max-width: 200px;
+	width: 100%;
+	height: 200px;
+	margin-bottom: 2.5vh;
+	border-radius: 12px;
+}
+
+.app__item-title {
+	font-size: 1.5rem;
+	line-height: 1.5;
+	margin-bottom: 1vh;
+}
+
+.app__item-product {
+	font-size: 1rem;
+	font-weight: 200;
+	text-transform: uppercase;
+	line-height: 1.5;
+	max-width: 80%;
+	margin-bottom: 1.5vh;
+}
+
+.app__item-price {
+	font-size: 1.4rem;
+	font-weight: 600;
+	margin-bottom: 2.5vh;
+}
+
+.app__item-id {
+	font-size: .75rem;
+}
