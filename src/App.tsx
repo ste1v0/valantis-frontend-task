@@ -1,46 +1,35 @@
-import { useState, useEffect } from 'react'
-import md5  from 'md5'
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
 
-	const [ ids, setIds ] = useState([])
-
-	useEffect(() => {
-		const currentDate = new Date()
-		const currentYear = currentDate.getFullYear()
-		const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-		const currentDay = currentDate.getDate()
-
-		const password = process.env.API_PASSWORD
-
-		const key = md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
-
-		fetch('http://api.valantis.store:40000?', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-Auth': key
-			},
-			body: JSON.stringify( {
-				action: 'get_ids'
-			})
-		})
-			.then(res => {
-				if (res.ok) {
-					return res.json()
-				} else {
-					throw new Error(`Whoops, the API has returned an error :( Code: ${res.status} Error Text: ${res.statusText}`)
-				}
-			})
-			.then(data => setIds(data.result))
-	}, [])
-
-	return (
-		<>
-			{ids.map(e => <p>{e}</p>)}
-		</>
-	)
+  return (
+    <>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
 export default App
