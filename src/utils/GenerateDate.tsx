@@ -1,6 +1,6 @@
 import md5 from 'md5'
 
-export default function generateDate() {
+export default function generateDate(): string {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
     
