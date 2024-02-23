@@ -23,7 +23,7 @@ function App() {
 
 		return md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
 	}
-
+	
 	useEffect(() => {
 		const key = generateDate()
 		setLoadingIds(true)
@@ -86,7 +86,6 @@ function App() {
 							setItems(prevValue => [...prevValue, result])
 						}
 					}
-					console.log(items.length)
 					setLoadingItems(false)
 				})
 		}
