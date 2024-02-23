@@ -23,14 +23,18 @@ function App() {
 
 	useEffect(() => {
 		if (ids.length > 0) {
+		const itemsSet: Set<ItemProps> = new Set()
 		setLoadingItems(true)
 		getItems(ids).then(res => { 
-			for (const id of ids.slice(0, 50)) {
-			const result = res.data.result.find((e : ItemProps) => e.id === id)
-				if (result) {
-					setItems(prevValue => [...prevValue, result])
+			for (const id of ids.slice(0, 51)) {
+			const uniqueObj = res.data.result.find((e : ItemProps) => e.id === id)
+				if (uniqueObj) {
+					itemsSet.add(uniqueObj)
 				}
 			}
+		const itemsArr = Array.from(itemsSet)
+		setItems(itemsArr)
+		console.log(itemsArr.length)
 		setLoadingItems(false)
 		})
 		}
@@ -39,7 +43,7 @@ function App() {
 	return (
 		<>
 			{(loadingIds || loadingItems) && <Loader loadingIds={loadingIds} />}
-			
+
 			{!loadingIds && !loadingItems &&
 				<div className="app__items-container">
 					{items.map(e => {
