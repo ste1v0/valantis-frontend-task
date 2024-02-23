@@ -1,4 +1,4 @@
-import generateDate from '../utils/generateDate'
+import generateDate from '../utils/generateDate.tsx'
 import axios from 'axios'
 
 export default function getIds() {
