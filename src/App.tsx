@@ -4,6 +4,7 @@ import Item from './components/Item'
 import ItemProps from './types/ItemProps'
 import getIds from './api/getIds'
 import getItems from './api/getItems'
+import Loader from './components/Loader'
 
 function App() {
 
@@ -19,7 +20,6 @@ function App() {
 			setLoadingIds(false)
 		})
 	}, [])
-
 
 	useEffect(() => {
 		if (ids.length > 0) {
@@ -38,11 +38,8 @@ function App() {
 
 	return (
 		<>
-			{(loadingIds || loadingItems) && 
-				<div className="app__loader-container">
-					<p className="app__loader">{loadingIds ? 'Loading IDs' : 'Loading products'}</p>
-				</div>
-			}
+			{(loadingIds || loadingItems) && <Loader loadingIds={loadingIds} />}
+			
 			{!loadingIds && !loadingItems &&
 				<div className="app__items-container">
 					{items.map(e => {
