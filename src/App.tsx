@@ -23,7 +23,7 @@ function App() {
 
 		return md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
 	}
-	
+
 	useEffect(() => {
 		const key = generateDate()
 		setLoadingIds(true)
@@ -81,7 +81,7 @@ function App() {
 				})
 				.then(data => { 
 					for (const id of ids.slice(0, 50)) {
-						const result = data.result.find(e => e.id === id)
+						const result = data.result.find((e : ItemProps) => e.id === id)
 						if (result) {
 							setItems(prevValue => [...prevValue, result])
 						}
