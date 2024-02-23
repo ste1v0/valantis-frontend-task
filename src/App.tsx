@@ -27,7 +27,7 @@ function App() {
 	useEffect(() => {
 		const key = generateDate()
 		setLoadingIds(true)
-		fetch('http://api.valantis.store:40000', {
+		fetch('https://api.valantis.store:41000', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function App() {
 		if (ids.length > 0) {
 			const key = generateDate()
 			setLoadingItems(true)
-			fetch('http://api.valantis.store:40000?', {
+			fetch('https://api.valantis.store:41000/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
