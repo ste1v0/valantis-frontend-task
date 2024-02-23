@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import md5 from 'md5'
 import './App.css'
 import Item from './components/Item'
 import ItemProps from './types/ItemProps'
+import GenerateDate from './utils/GenerateDate'
 
 function App() {
 
@@ -11,21 +11,8 @@ function App() {
 	const [ loadingIds, setLoadingIds ] = useState<boolean>(false)
 	const [ loadingItems, setLoadingItems ] = useState<boolean>(false)
 
-	const password = process.env.API_PASSWORD
-
-	function generateDate() {
-		const timeElapsed = Date.now()
-		const today = new Date(timeElapsed)
-		
-		const currentYear = today.getUTCFullYear()
-		const currentMonth = (today.getUTCMonth() + 1).toString().padStart(2, '0')
-		const currentDay = today.getUTCDate()
-
-		return md5(`${password}_${currentYear}${currentMonth}${currentDay}`)
-	}
-
 	useEffect(() => {
-		const key = generateDate()
+		const key = GenerateDate()
 		setLoadingIds(true)
 		fetch('https://api.valantis.store:41000', {
 			method: 'POST',
@@ -57,7 +44,7 @@ function App() {
 
 	useEffect(() => {
 		if (ids.length > 0) {
-			const key = generateDate()
+			const key = GenerateDate()
 			setLoadingItems(true)
 			fetch('https://api.valantis.store:41000/', {
 				method: 'POST',
