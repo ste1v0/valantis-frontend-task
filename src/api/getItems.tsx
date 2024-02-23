@@ -1,7 +1,7 @@
 import generateDate from '../utils/generateDate'
 import axios from 'axios'
 
-export default function getIds(ids) {
+export default function getIds(ids: string[]) {
 	return axios.post('https://api.valantis.store:41000/', 
 		{
 			action: 'get_items',
