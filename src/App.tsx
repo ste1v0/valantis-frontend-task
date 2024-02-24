@@ -24,7 +24,7 @@ function App() {
 
 	useEffect(() => {
 		setLoadingIds(true)
-		getIds().then(res => {
+		getIds()?.then(res => {
 			setIds(res.data.result)
 			setLoadingIds(false)
 		})
@@ -71,7 +71,7 @@ function App() {
 	useEffect(() => {
 		if (selectedBrand !== '') {
 			setLoadingFields(true)
-			getIds(selectedBrand).then(res => {
+			getIds(selectedBrand)?.then(res => {
 				setIds(res.data.result)
 			})
 			.finally(() => setLoadingFields(false))
