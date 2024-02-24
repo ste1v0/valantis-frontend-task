@@ -48,25 +48,25 @@ function App() {
 		}
 	}, [ids])
 
-	useEffect(() => {
-		setLoadingFields(true)
-		getBrands().then(res => {
-			const result = res.data.result.filter((e : string) => e !== null)
-			const resultSet: Set<string> = new Set(result)
-			setBrands(Array.from(resultSet))
-		})
-		getProducts().then(res => {
-			const result = res.data.result.filter((e : string) => e !== null)
-			const resultSet: Set<string> = new Set(result)
-			// setProducts(Array.from(resultSet))
-		})
-		getPrices().then(res => {
-			const result = res.data.result.filter((e : number) => e !== null)
-			const resultSet: Set<number | string> = new Set(result)
-			// setPrices(Array.from(resultSet))
-		})
-		.finally(() => setLoadingFields(false))
-	}, [])
+	// useEffect(() => {
+	// 	setLoadingFields(true)
+	// 	getBrands().then(res => {
+	// 		const result = res.data.result.filter((e : string) => e !== null)
+	// 		const resultSet: Set<string> = new Set(result)
+	// 		setBrands(Array.from(resultSet))
+	// 	})
+	// 	getProducts().then(res => {
+	// 		const result = res.data.result.filter((e : string) => e !== null)
+	// 		const resultSet: Set<string> = new Set(result)
+	// 		// setProducts(Array.from(resultSet))
+	// 	})
+	// 	getPrices().then(res => {
+	// 		const result = res.data.result.filter((e : number) => e !== null)
+	// 		const resultSet: Set<number | string> = new Set(result)
+	// 		// setPrices(Array.from(resultSet))
+	// 	})
+	// 	.finally(() => setLoadingFields(false))
+	// }, [])
 
 	useEffect(() => {
 		if (selectedBrand !== '') {
