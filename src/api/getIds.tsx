@@ -2,7 +2,9 @@ import generateDate from '../utils/generateDate'
 import axios from 'axios'
 
 export default function getIds(selectedBrand = '') {
-	return axios.post('https://api.valantis.store:41000/', 
+
+	try {
+		return axios.post('https://api.valantis.store:41000/', 
 		{
 			action: !selectedBrand ? 'get_ids' : 'filter',
 			params: !selectedBrand ? {
@@ -18,4 +20,9 @@ export default function getIds(selectedBrand = '') {
 			}
 		})
 		.then(res => res)
+	} catch (error) {
+		console.log(error, 'trying again in 1 second')
+		setTimeout(() => getIds(selectedBrand), 1000)
+	}
+
 }

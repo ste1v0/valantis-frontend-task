@@ -85,14 +85,17 @@ function App() {
 			{!loadingIds && !loadingItems && !loadingFields &&
 				<div className="app__container">
 					<div className="app__filters">
-						<select className="app__select" value={selectedBrand} onChange={e => setSelectedBrand(e.target.value)}>
-							<option value="">Choose brand</option>
-							{brands.map(e => {
-								return (
-									<option value={e}>{e}</option>
-								)
-							})}
-						</select>
+						<h3 className="app__filters-title">Brand</h3>
+						<div className="app__select">
+							<select className="app__standard-select" value={selectedBrand} onChange={e => setSelectedBrand(e.target.value)}>
+								<option value=''>Choose brand</option>
+								{brands.map(e => {
+									return (
+										<option value={e}>{e}</option>
+									)
+								})}
+							</select>
+						</div>
 					</div>
 					<div className="app__items-container">
 						{items.map(e => {

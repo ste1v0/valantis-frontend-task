@@ -4,14 +4,43 @@ body {
 }
 
 * {
-	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	transition: all .3s ease;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .pointer {
 	cursor: pointer;
+}
+
+.app__container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.app__filters {
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2vh;
+	padding: 5vh 2vw;
+}
+
+.app__select {
+	font-family: inherit;
+	font-size: inherit;
+	cursor: inherit;
+	line-height: 1.5;
 }
 
 .app__loader-container {
