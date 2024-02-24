@@ -5,8 +5,8 @@ import ItemProps from './types/ItemProps'
 import getIds from './api/getIds'
 import getItems from './api/getItems'
 import getBrands from './api/getBrands'
-import getProducts from './api/getProducts'
-import getPrices from './api/getPrices'
+// import getProducts from './api/getProducts'
+// import getPrices from './api/getPrices'
 import Loader from './components/Loader'
 // import PriceType from './types/priceType'
 
@@ -48,33 +48,33 @@ function App() {
 		}
 	}, [ids])
 
-	// useEffect(() => {
-	// 	setLoadingFields(true)
-	// 	getBrands().then(res => {
-	// 		const result = res.data.result.filter((e : string) => e !== null)
-	// 		const resultSet: Set<string> = new Set(result)
-	// 		setBrands(Array.from(resultSet))
-	// 	})
-	// 	getProducts().then(res => {
-	// 		const result = res.data.result.filter((e : string) => e !== null)
-	// 		const resultSet: Set<string> = new Set(result)
-	// 		// setProducts(Array.from(resultSet))
-	// 	})
-	// 	getPrices().then(res => {
-	// 		const result = res.data.result.filter((e : number) => e !== null)
-	// 		const resultSet: Set<number | string> = new Set(result)
-	// 		// setPrices(Array.from(resultSet))
-	// 	})
-	// 	.finally(() => setLoadingFields(false))
-	// }, [])
+	useEffect(() => {
+		setLoadingFields(true)
+		getBrands().then(res => {
+			const result = res.data.result.filter((e : string) => e !== null)
+			const resultSet: Set<string> = new Set(result)
+			setBrands(Array.from(resultSet))
+		})
+		// getProducts().then(res => {
+		// 	const result = res.data.result.filter((e : string) => e !== null)
+		// 	const resultSet: Set<string> = new Set(result)
+		// 	// setProducts(Array.from(resultSet))
+		// })
+		// getPrices().then(res => {
+		// 	const result = res.data.result.filter((e : number) => e !== null)
+		// 	const resultSet: Set<number | string> = new Set(result)
+		// 	// setPrices(Array.from(resultSet))
+		// })
+		.finally(() => setLoadingFields(false))
+	}, [])
 
 	useEffect(() => {
 		if (selectedBrand !== '') {
-			setLoadingItems(true)
+			setLoadingFields(true)
 			getIds(selectedBrand).then(res => {
 				setIds(res.data.result)
 			})
-			.finally(() => setLoadingItems(false))
+			.finally(() => setLoadingFields(false))
 		}
 	}, [selectedBrand])
 
