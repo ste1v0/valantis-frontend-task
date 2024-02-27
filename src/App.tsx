@@ -16,7 +16,7 @@ function App() {
 	const [ brands, setBrands ] = useState<string[]>([])
 	const [ products, setProducts ] = useState<string[]>([])
 	const [ prices, setPrices ] = useState<number[]>([])
-	const [ selectedFilters, setSelectedFilters ] = useState<ItemProps>({brand: '', product: '', price: 0, id: '', offset: 0})
+	const [ selectedFilters, setSelectedFilters ] = useState({brand: '', product: '', price: 0, id: '', offset: 0})
 	const [ searchTerm, setSearchTerm ] = useState('')
 	const [ queryResults, setQueryResults ] = useState<string[]>([])
 	const [ minPrice, setMinPrice ] = useState<number>()
@@ -170,9 +170,9 @@ function App() {
 							<input className="app__standard-input__price" value={minPrice} onChange={(e) => handleMinPriceChange(e)} type="number" placeholder="0" />
 							<input className="app__standard-input__price" value={maxPrice} onChange={(e) => handleMaxPriceChange(e)} type="number" placeholder="500000"/>
 						</form>
-						{Object.keys(selectedFilters).length > 0 && <button className="app__reset-btn" onClick={handleReset}>Reset filter</button>}
+						{(selectedFilters.brand !== '' || selectedFilters.product !== '' || selectedFilters.price !== 0) && <button className="app__reset-btn" onClick={handleReset}>Reset filter</button>}
 					</div>
-					{!selectedFilters.brand && !selectedFilters.product && !selectedFilters.price && !searchTerm && !queryResults &&
+					{(selectedFilters.brand === '' && selectedFilters.product === '' && selectedFilters.price === 0) &&
 						<div className="app__pagination">
 							<button className="app__pagination-btn" onClick={previousPage}>Previous</button>
 							<p className="app__pagination-page">{currentPage} of {pages}</p>

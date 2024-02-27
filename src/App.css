@@ -64,6 +64,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	gap: 2vh 2vw;
+	margin-bottom: 2vh;
 }
 
 .app__list {
