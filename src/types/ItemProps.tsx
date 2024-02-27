@@ -5,4 +5,5 @@ type ItemProps = {
     price: number
     product: string
     id: string
+    offset: number
 }
