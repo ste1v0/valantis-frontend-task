@@ -19,6 +19,10 @@ body {
 	cursor: pointer;
 }
 
+.m-1 {
+	margin-right: 1vw;
+}
+
 .app__container {
 	display: flex;
 	flex-direction: column;
@@ -67,6 +71,18 @@ body {
 	margin-bottom: 2vh;
 }
 
+.app__pagination-btn,
+.app__reset-btn {
+	font-family: inherit;
+	font-size: .85rem;
+	cursor: pointer;
+	line-height: 1.5;
+	text-align: center;
+	padding: 1vh 1vw;
+	border: 1px solid #e2dfdf;
+	border-radius: 7px;
+}
+
 .app__list {
 	display: flex;
 	justify-content: center;
@@ -89,6 +105,15 @@ body {
 	box-shadow: 0 0 9px #FFF;
 }
 
+.app__filters-title {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+input {
+	outline: none;
+}
+
 .app__standard-select,
 .app__standard-input {
 	font-family: inherit;
@@ -96,12 +121,18 @@ body {
 	cursor: inherit;
 	line-height: 1.5;
 	text-align: center;
+	padding: 1vh 1vw;
+	border: 1px solid #f5f5f5;
+	border-radius: 7px;
 }
 
 .app__standard-input__price {
 	font-family: inherit;
 	text-align: center;
 	max-width: 7vw;
+	padding: 1vh 1vw;
+	border-radius: 7px;
+	border: 1px solid #f5f5f5;
 }
 
 .app__loader-container {

@@ -29,51 +29,106 @@ function App() {
 	const [ pages, setPages ] = useState(0)
 
 	useEffect(() => {
-		setLoadingIds(true)
-		getIds(selectedFilters).then(res => {
-			setIds(res.data.result)
-			setPages(Math.ceil(res.data.result.length / 50))
-		})
-		.finally(() => {
-			setLoadingIds(false)
-		})
-	}, [selectedFilters])
+		setLoadingIds(true);
+		
+		getIds(selectedFilters)
+			.then(res => {
+				setIds(res.data.result);
+				setPages(Math.ceil(res.data.result.length / 50));
+			})
+			.catch(err => {
+				console.log('500 detected, resending the request', err);
+				return getIds(selectedFilters)
+					.then(res => {
+						setIds(res.data.result);
+						setPages(Math.ceil(res.data.result.length / 50));
+					});
+			})
+			.finally(() => {
+				setLoadingIds(false);
+			});
+		}, [selectedFilters]);
 
 	useEffect(() => {
 		if (ids.length > 0) {
 			const itemsSet: Set<ItemProps> = new Set()
 			setLoadingItems(true)
-			getItems(ids).then(res => { 
-				for (const id of ids.slice(0, 51)) {
-					const uniqueObj = res.data.result.find((e : ItemProps) => e.id === id)
-						if (uniqueObj) {
-							itemsSet.add(uniqueObj)
+			getItems(ids)
+				.then(res => { 
+					for (const id of ids.slice(0, 51)) {
+						const uniqueObj = res.data.result.find((e : ItemProps) => e.id === id)
+							if (uniqueObj) {
+								itemsSet.add(uniqueObj)
+							}
 						}
-					}
-				const itemsArr = Array.from(itemsSet)
-				setItems(itemsArr)
-			})
-			.finally(() => setLoadingItems(false))
+					const itemsArr = Array.from(itemsSet)
+					setItems(itemsArr)
+				})
+				.catch(err => {
+					console.log('500 detected, resending the request', err);
+					return getItems(ids)
+						.then(res => { 
+							for (const id of ids.slice(0, 51)) {
+								const uniqueObj = res.data.result.find((e : ItemProps) => e.id === id)
+									if (uniqueObj) {
+										itemsSet.add(uniqueObj)
+									}
+								}
+							const itemsArr = Array.from(itemsSet)
+							setItems(itemsArr)
+						})
+				})
+				.finally(() => setLoadingItems(false))
 		}
 	}, [ids])
 
 	useEffect(() => {
 		setLoadingFields(true)
-		getBrands().then(res => {
-			const result = res.data.result.filter((e : string) => e !== null)
-			const resultSet: Set<string> = new Set(result)
-			setBrands(Array.from(resultSet))
-		})
-		getProducts().then(res => {
-			const result = res.data.result.filter((e : string) => e !== null)
-			const resultSet: Set<string> = new Set(result)
-			setProducts(Array.from(resultSet))
-		})
-		getPrices().then(res => {
-			const result = res.data.result.filter((e : number) => e !== null)
-			const resultSet: Set<number> = new Set(result)
-			setPrices(Array.from(resultSet))
-		})
+		getBrands()
+			.then(res => {
+				const result = res.data.result.filter((e : string) => e !== null)
+				const resultSet: Set<string> = new Set(result)
+				setBrands(Array.from(resultSet))
+			})
+			.catch(err => {
+				console.log('500 detected, resending the request', err);
+				return getBrands()
+					.then(res => {
+						const result = res.data.result.filter((e : string) => e !== null)
+						const resultSet: Set<string> = new Set(result)
+						setBrands(Array.from(resultSet))
+					})
+			})
+		getProducts()
+			.then(res => {
+				const result = res.data.result.filter((e : string) => e !== null)
+				const resultSet: Set<string> = new Set(result)
+				setProducts(Array.from(resultSet))
+			})
+			.catch(err => {
+				console.log('500 detected, restarting', err)
+				return getProducts()
+					.then(res => {
+						const result = res.data.result.filter((e : string) => e !== null)
+						const resultSet: Set<string> = new Set(result)
+						setProducts(Array.from(resultSet))
+					})
+			})
+		getPrices()
+			.then(res => {
+				const result = res.data.result.filter((e : number) => e !== null)
+				const resultSet: Set<number> = new Set(result)
+				setPrices(Array.from(resultSet))
+			})
+			.catch(err => {
+				console.log('500 detected, restarting', err)
+				return getPrices()
+					.then(res => {
+						const result = res.data.result.filter((e : number) => e !== null)
+						const resultSet: Set<number> = new Set(result)
+						setPrices(Array.from(resultSet))
+					})
+			})
 		.finally(() => setLoadingFields(false))
 	}, [])
 
@@ -167,7 +222,7 @@ function App() {
 						<hr className="app__hr" />
 							<h3 className="app__filters-title">By price</h3>
 						<form onSubmit={e => e.preventDefault()}>
-							<input className="app__standard-input__price" value={minPrice} onChange={(e) => handleMinPriceChange(e)} type="number" placeholder="0" />
+							<input className="app__standard-input__price m-1" value={minPrice} onChange={(e) => handleMinPriceChange(e)} type="number" placeholder="0" />
 							<input className="app__standard-input__price" value={maxPrice} onChange={(e) => handleMaxPriceChange(e)} type="number" placeholder="500000"/>
 						</form>
 						{(selectedFilters.brand !== '' || selectedFilters.product !== '' || selectedFilters.price !== 0) && <button className="app__reset-btn" onClick={handleReset}>Reset filter</button>}
@@ -176,7 +231,7 @@ function App() {
 						<div className="app__pagination">
 							<button className="app__pagination-btn" onClick={previousPage}>Previous</button>
 							<p className="app__pagination-page">{currentPage} of {pages}</p>
-							<button className="app_pagination-btn" onClick={nextPage}>Next</button>
+							<button className="app__pagination-btn" onClick={nextPage}>Next</button>
 						</div>}
 					<ul className="app__list">
 						{priceResults.length > 0 && 

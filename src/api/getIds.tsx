@@ -11,7 +11,7 @@ export default function getIds({ brand, product, price, offset } : ItemProps) {
 		offset: offset
 	}
 
-	function deleteEmpty<T>(obj: T): T {
+	function deleteEmpty<T>(obj:T ) :T {
 		for (const key in obj) {
 			if (!obj[key]) {
 				delete obj[key]
